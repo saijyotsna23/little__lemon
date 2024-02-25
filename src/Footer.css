@@ -1,27 +1,21 @@
-.footer-content{
+.footer-content {
     display: flex;
-    position: fixed;
-  bottom: 0;
-  left: 0;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  width: 100%;
-  background-color: #333;
-  color: white;
-  padding: 5px;
-    
-}
-.contact-info{
-    align-items: center;
-    justify-content: center;
-}
+    justify-content: space-between; /* Align children at opposite ends */
+    align-items: center; /* Vertically center children */
+    background-color: #333;
+    color: white;
+    padding: 20px;
+  }
+  .contact-info {
+    flex-grow: 1; /* Allow contact info to grow and take available space */
+    text-align: center; /* Center align contact information */
+  }
 .footer-logo {
-    align-self: start; /* Add some spacing between logo and contact info */
+    display: flex;
+    align-items: flex-start;/* Add some spacing between logo and contact info */
   }
   .footer-logo img {
-    width: 50px; /* Set the width of the image */
-    height: auto;
-    position: absolute; /* Set the position of the logo to absolute */
-    bottom: 0; /* Align the bottom of the logo with the bottom of the container */
-    right: 0; 
+    width: 50px;
   }
+
+  

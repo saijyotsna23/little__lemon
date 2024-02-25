@@ -1,0 +1,52 @@
+/*.main-content {
+   display: grid;
+grid-template-columns: 1fr 1fr; /
+gap: 20px; 
+    
+    
+    padding-top: 10px;
+  }*/
+  .stylef {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 10px; /* Gap between grid items */
+    margin-top: 30px; /* Margin on the top */
+    background-color: darkgreen; /* Background color */
+    
+    margin-bottom: 100px; /* Margin on the bottom */
+   
+  }
+  
+  .text-container {
+    grid-column: 1 / span 1; /* Text container spans one column */
+    padding: 20px; /* Add padding */
+    justify-self: center;
+
+
+  }
+  
+  .text-container h1 {
+    font-family: Arial, Helvetica, sans-serif; /* Font family */
+    color: yellow; /* Text color */
+  }
+  .text-container h2,p {
+    font-family: Arial, Helvetica, sans-serif; /* Font family */
+    color: white; /* Text color */
+  }
+  
+  .image-container {
+    grid-column: 2 / span 1; /* Image container spans one column */
+    position: relative; /* Set the position to relative */
+    
+}
+
+.image-container img {
+    max-width: 350px; /* Set maximum width for the image */
+    max-height: 300px; /* Set maximum height for the image */
+    position: absolute; /* Set the position to absolute */
+    right: 40%; /* Push the image 5% outside the container */
+    top: 60%; /* Adjust the top position to push the image lower */
+    transform: translateY(-40%);  /*Adjust for vertical centering */
+   
+    border-radius: 10px; /* Apply border radius */
+}

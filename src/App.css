@@ -36,4 +36,9 @@
     transform: rotate(360deg);
   }
 }
-
+.app-grid {
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Header, Main, Footer */
+  grid-template-columns: 1fr; /* Single column layout */
+  min-height: 100vh;
+}
