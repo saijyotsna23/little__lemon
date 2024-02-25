@@ -1,8 +1,14 @@
 import React from "react";
+import '../Headernav.css';
+import Image from '../Images/Logo.jpg';
+
 function Header(){
     return(
-        <header>
-            <img src="../Images/Logo.jpg" alt="Little Lemon Logo" />
+        <header className="header">
+
+            <img src={Image} alt="Little Lemon Logo" />
+            
+
         </header>
     );
 

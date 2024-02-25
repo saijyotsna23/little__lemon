@@ -1,11 +1,12 @@
 import React from "react";
-
+import '../Footer.css';
+import mImage from '../Images/Logo-.jpg';
 function Footer(){
     return(
         <footer>
             <div className="footer-content">
         <div className="footer-logo">
-        <img src="../Images/Logo.jpg" alt="Little Lemon Logo" />
+        <img src={mImage} alt="Little Lemon Logo" />
         </div>
         <div className="contact-info">
         <h4>Contact Us</h4>
