@@ -1,0 +1,95 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    width: calc(25% - 20px); /* Set width for each card to fit two cards in one row with some spacing */
+    height: 400px;
+    margin-top: 20px;
+}
+
+.card-image {
+    width: 100%;
+    height: 150px; /* Reduced height of the image */
+    object-fit: cover; /* Maintain aspect ratio and cover container */
+}
+
+.card-content {
+    padding: 10px; /* Reduced padding */
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-name {
+    margin: 0;
+    font-size: 1em; /* Reduced font size */
+}
+
+.card-price {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.9em; /* Reduced font size */
+    color: #333; /* Darker color for better visibility */
+}
+
+.card-description {
+    margin-top: 5px; /* Reduced margin */
+    color: #555;
+    font-size: 0.8em; /* Reduced font size */
+}
+@media only screen and (max-width: 600px) {
+    .card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        width: calc(60% - 20px); /* Set width for each card to fit two cards in one row with some spacing */
+        height: 400px;
+        margin-top: 20px;
+        
+    }
+    
+    .card-image {
+        width: 100%;
+        height: 150px; /* Reduced height of the image */
+        object-fit: cover; /* Maintain aspect ratio and cover container */
+    }
+    
+    .card-content {
+        padding: 10px; /* Reduced padding */
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .card-name {
+        margin: 0;
+        font-size: 1em; /* Reduced font size */
+    }
+    
+    .card-price {
+        margin: 0;
+        font-weight: bold;
+        font-size: 0.9em; /* Reduced font size */
+        color: #333; /* Darker color for better visibility */
+    }
+    
+    .card-description {
+        margin-top: 5px; /* Reduced margin */
+        color: #555;
+        font-size: 0.8em; /* Reduced font size */
+    }
+
+
+}

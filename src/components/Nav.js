@@ -1,5 +1,6 @@
 import React from "react";
 import '../Headernav.css';
+
 function Nav(){
     return(
         <nav className="nav-links">

@@ -41,7 +41,7 @@ gap: 20px;
 }
 
 .image-container img {
-    max-width: 350px; /* Set maximum width for the image */
+    max-width: 500px; /* Set maximum width for the image */
     max-height: 300px; /* Set maximum height for the image */
     position: absolute; /* Set the position to absolute */
     right: 40%; /* Push the image 5% outside the container */
@@ -50,3 +50,48 @@ gap: 20px;
    
     border-radius: 10px; /* Apply border radius */
 }
+.special-container{
+    display: flex;
+    justify-content:space-evenly;
+  
+    
+}
+.special-container h1 {
+    
+  margin-bottom: 20px;
+    
+}
+.special-container Button {
+    margin-top: 10px;
+    
+    height: 50px;
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .stylef {
+        grid-template-columns: 1fr 1fr; /* Change to a single column layout */
+    }
+
+    .text-container {
+        grid-column: 1; /* Reset grid column to auto-placement */
+        text-align: left; /* Center align text on mobile */
+        justify-content: left;
+
+    }
+
+    .image-container {
+        grid-column: 2; /* Reset grid column to auto-placement */
+        justify-content: left; /* Center image horizontally */
+        margin-top: 15px;
+    }
+
+    .image-container img {
+        max-width: 150px; /* Allow image to take full width */
+        margin: 2; /* Remove margin to fit full width */
+        border-radius: 8px; /* Remove border radius */
+        position: static; /* Reset positioning */
+        transform: none; /* Reset any transformations */
+    }
+}
+
