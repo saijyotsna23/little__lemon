@@ -1,0 +1,27 @@
+/* src/Menu.css */
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.category {
+    margin-bottom: 20px;
+}
+
+.category h2 {
+    color: #4caf50; /* Green color for category titles */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.name {
+    background-color:lightgray; /* Light grey background for items */
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}

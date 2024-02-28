@@ -1,0 +1,27 @@
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+.flexbox{
+    display: flex;
+
+}
+.flexbox img{
+    max-width: 500px;
+    max-height: 300px;
+    width: 20%;
+}
+
+.about-container h1 {
+    color: #4CAF50; /* Little Lemon's theme color */
+    margin-bottom: 20px;
+}
+
+.about-container p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
