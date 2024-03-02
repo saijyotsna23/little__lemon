@@ -10,7 +10,7 @@ return (
     <p>
         Nestled in the heart of the city, Little Lemon offers an unforgettable dining experience, combining exquisite culinary creations with a warm, inviting atmosphere. Our mission is to bring together the finest ingredients and flavors from around the world to create dishes that not only satisfy the palate but also inspire the soul.
     
-   
+
     
     <br/>
     <br/>
@@ -22,7 +22,7 @@ return (
         At Little Lemon, we believe in the power of food to bring people together. Whether you're celebrating a special occasion or simply treating yourself to a delightful meal, we're here to make your experience exceptional. Join us and discover the magic of Little Lemon.
     </p>
     </div>
-  );
+);
 };
 
 export default About;
