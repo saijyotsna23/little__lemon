@@ -1,34 +1,18 @@
 
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
+import { fetchAPI, submitAPI } from '../api';
 import BookingForm from "./BookingForm";
+// Assuming fetchAPI and submitAPI are globally available
+// If not, you may need to import or define them here
 
 const Reservations = () => {
-    // Initial available times
-    const initialAvailableTimes = [
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-        "21:00",
-        "22:00"
-    ];
-
     // Reducer function to manage available times state
-    const availableTimesReducer = (state, action) => {
-        switch (action.type) {
-            case 'UPDATE_TIMES':
-                return action.times;
-            default:
-                return state;
-        }
-    };
-
-    // Use reducer to manage available times state
     const [availableTimes, dispatchAvailableTimes] = useReducer(
-        availableTimesReducer,
-        initialAvailableTimes
+        (state, action) => action,
+        [] // Initialize with an empty array
     );
 
+    // Form data state
     const [formData, setFormData] = useState({
         date: "",
         time: "",
@@ -40,10 +24,24 @@ const Reservations = () => {
         occasionError: ""
     });
 
+    // Fetch available times for today's date on component mount
+    useEffect(() => {
+        const today = new Date();
+        fetchAvailableTimes(today);
+    }, []);
+
+    // Function to fetch available times based on the selected date
+    const fetchAvailableTimes = (date) => {
+        const availableTimes = fetchAPI(date); // Use the fetchAPI with the date parameter
+        dispatchAvailableTimes(availableTimes); // Update state with fetched times
+    };
+
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
         let isValid = true;
 
+        // Validation logic as provided
         if (!formData.date) {
             setFormData(prevState => ({ ...prevState, dateError: "Please choose a date." }));
             isValid = false;
@@ -73,66 +71,54 @@ const Reservations = () => {
         }
 
         if (isValid) {
-            setFormData({
-                date: "",
-                time: "",
-                guests: "",
-                occasion: "",
-                dateError: "",
-                timeError: "",
-                guestsError: "",
-                occasionError: ""
-            });
+            const success = submitAPI(formData); // Use the submitAPI to submit the form data
+
+            if (success) {
+                // Reset form data after successful submission
+                setFormData({
+                    date: "",
+                    time: "",
+                    guests: "",
+                    occasion: "",
+                    dateError: "",
+                    timeError: "",
+                    guestsError: "",
+                    occasionError: ""
+                });
+                console.log("Form submitted successfully with data:", formData);// Optionally, provide feedback to the user
+            }
         }
     };
 
-    const handleChange = (field, value) => {
+    // Handle form field changes
+    const onChange = (field, value) => {
+        console.log(`Updating ${field} to ${value}`);
         setFormData(prevState => ({
+            
             ...prevState,
             [field]: value,
-            [`${field}Error`]: "" // Clear the error message for the field
+            [`${field}Error`]: "" // Clear any field-specific error
         }));
     };
 
-    // Function to update available times based on the selected date
-    const updateAvailableTimes = (selectedDate) => {
-        const weekdaysTimes = [
-            "09:00",
-            "10:00",
-            "11:00",
-            "12:00",
-            "13:00"
-        ];
-    
-        const weekendTimes = [
-            "14:00",
-            "15:00",
-            "16:00",
-            "17:00",
-            "18:00"
-        ];
-        
-    
-        const isWeekend = selectedDate.getDay() === 5 || selectedDate.getDay() === 6;
-        return isWeekend ? weekendTimes : weekdaysTimes;
+    // Handle date change and fetch available times
+    const handleDateChange = (dateValue) => {
+        const selectedDate = new Date(dateValue);
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(selectedDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        setFormData(prevState => ({ ...prevState, date: formattedDate }));
+        fetchAvailableTimes(selectedDate);
     };
-    
-    
-    
-    // Handle date change and update available times
-    const handleDateChange = (selectedDate) => {
-        const updatedTimes = updateAvailableTimes(selectedDate);
-        dispatchAvailableTimes({ type: 'UPDATE_TIMES', times: updatedTimes });
-    };
-
     return (
         <div className="container">
             <BookingForm
                 formData={formData}
                 availableTimes={availableTimes}
-                onChange={handleChange}
+                onChange={onChange}
                 onSubmit={handleSubmit}
-                onDateChange={handleDateChange} // Pass the date change handler
+                onDateChange={handleDateChange} // Adjusted to handle fetching times
             />
         </div>
     );
