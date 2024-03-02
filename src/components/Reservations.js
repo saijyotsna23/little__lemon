@@ -2,6 +2,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { fetchAPI, submitAPI } from '../api';
 import BookingForm from "./BookingForm";
+import ConfirmationMessage from "./ConfirmationMessage";
 // Assuming fetchAPI and submitAPI are globally available
 // If not, you may need to import or define them here
 
@@ -11,6 +12,9 @@ const Reservations = () => {
         (state, action) => action,
         [] // Initialize with an empty array
     );
+    // Confirmation state
+    const [confirmationVisible, setConfirmationVisible] = useState(false);
+    const [bookingDetails, setBookingDetails] = useState(null);
 
     // Form data state
     const [formData, setFormData] = useState({
@@ -74,6 +78,8 @@ const Reservations = () => {
             const success = submitAPI(formData); // Use the submitAPI to submit the form data
 
             if (success) {
+                setBookingDetails(formData);
+                setConfirmationVisible(true);
                 // Reset form data after successful submission
                 setFormData({
                     date: "",
@@ -120,7 +126,9 @@ const Reservations = () => {
                 onSubmit={handleSubmit}
                 onDateChange={handleDateChange} // Adjusted to handle fetching times
             />
+        {confirmationVisible && <ConfirmationMessage bookingDetails={bookingDetails} />}
         </div>
+        
     );
 };
 
