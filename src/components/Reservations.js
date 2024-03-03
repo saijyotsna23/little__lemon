@@ -2,19 +2,19 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { fetchAPI, submitAPI } from '../api';
 import BookingForm from "./BookingForm";
-import ConfirmationMessage from "./ConfirmationMessage";
-// Assuming fetchAPI and submitAPI are globally available
-// If not, you may need to import or define them here
+
+import { useNavigate } from "react-router-dom";
 
 const Reservations = () => {
+    const navigate= useNavigate();
+    const [formSubmitted, setFormSubmitted] = useState(false);
     // Reducer function to manage available times state
     const [availableTimes, dispatchAvailableTimes] = useReducer(
         (state, action) => action,
         [] // Initialize with an empty array
     );
     // Confirmation state
-    const [confirmationVisible, setConfirmationVisible] = useState(false);
-    const [bookingDetails, setBookingDetails] = useState(null);
+    
 
     // Form data state
     const [formData, setFormData] = useState({
@@ -78,8 +78,7 @@ const Reservations = () => {
             const success = submitAPI(formData); // Use the submitAPI to submit the form data
 
             if (success) {
-                setBookingDetails(formData);
-                setConfirmationVisible(true);
+                setFormSubmitted(true);
                 // Reset form data after successful submission
                 setFormData({
                     date: "",
@@ -91,6 +90,7 @@ const Reservations = () => {
                     guestsError: "",
                     occasionError: ""
                 });
+                navigate("/confirmed-booking",{state:{formData}});
                 console.log("Form submitted successfully with data:", formData);// Optionally, provide feedback to the user
             }
         }
@@ -126,7 +126,7 @@ const Reservations = () => {
                 onSubmit={handleSubmit}
                 onDateChange={handleDateChange} // Adjusted to handle fetching times
             />
-        {confirmationVisible && <ConfirmationMessage bookingDetails={bookingDetails} />}
+        {formSubmitted && <p>Form submitted successfully</p>}
         </div>
         
     );

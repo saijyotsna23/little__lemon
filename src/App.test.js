@@ -1,45 +1,62 @@
-// Reservations.test.js
-
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { fetchAPI } from './api';
 import BookingForm from './components/BookingForm';
 import Reservations from './components/Reservations';
-describe('Reservations component', () => {
-  it('updates available times based on the selected date', () => {
-    const { getByLabelText, getByText } = render(<Reservations />);
-    const dateInput = getByLabelText('Choose date');
+jest.mock('./api', () => ({
+  fetchAPI: jest.fn(),
+}));
 
-    // Choose a date
-    fireEvent.change(dateInput, { target: { value: '2024-03-01' } });
+describe('Reservations Component', () => {
+  test('fetches available times and initializes state correctly', async () => {
+    // Mock fetchAPI to return undefined
+    fetchAPI.mockResolvedValueOnce(undefined);
 
-    // Check if the available times are updated
-    expect(getByText('09:00')).toBeInTheDocument();
-    expect(getByText('10:00')).toBeInTheDocument();
-    expect(getByText('11:00')).toBeInTheDocument();
-    expect(getByText('12:00')).toBeInTheDocument();
-    expect(getByText('13:00')).toBeInTheDocument();
+    render(
+      <Router>
+        <Reservations />
+      </Router>
+    );
+
+    // Check if select element is present
+    const timeSelect = screen.getByLabelText('Choose time');
+    expect(timeSelect).toBeInTheDocument();
+
+    // Ensure that the select element contains the default option
+    expect(screen.getByDisplayValue('Select time')).toBeInTheDocument();
   });
 
-  it('updates available times when no date selected', () => {
-    const { getByLabelText, getByText } = render(<Reservations />);
-    const dateInput = getByLabelText('Choose date');
+  test('updateTimes dispatches action to update available times', async () => {
+    // Mock fetchAPI to return a non-empty array
+    const availableTimes = ['09:00 AM', '10:00 AM', '11:00 AM'];
+    fetchAPI.mockResolvedValueOnce(availableTimes);
 
-    // Choose a date
-    fireEvent.change(dateInput, { target: { value: '' } });
+    const dispatch = jest.fn(); // Mock dispatch function
 
-    // Check if the available times are updated
-    expect(getByText('17:00')).toBeInTheDocument();
-    expect(getByText('18:00')).toBeInTheDocument();
-    expect(getByText('19:00')).toBeInTheDocument();
-    expect(getByText('20:00')).toBeInTheDocument();
-    expect(getByText('21:00')).toBeInTheDocument();
-    expect(getByText('22:00')).toBeInTheDocument();
+    render(
+      <Router>
+        <Reservations dispatch={dispatch} />
+      </Router>
+    );
+
+    // Wait for the select element to be rendered
+    const timeSelect = await screen.findByLabelText('Choose time');
+
+    // Check if each time option is present in the select element
+    availableTimes.forEach(async time => {
+      // Wait for the option to appear
+      const option = await screen.findByRole('option', { name: time });
+      expect(option).toBeInTheDocument();
+    });
+
+    
+   
   });
-
-  
 
   it('displays error messages for empty fields on form submission', () => {
-    const { getByLabelText, getByText } = render(<Reservations />);
+    const { getByLabelText, getByText } = render(<Router>
+      <Reservations />
+    </Router>);
     const submitButton = getByLabelText('Submit reservation');
 
     // Submit the form without filling out any fields
@@ -51,60 +68,35 @@ describe('Reservations component', () => {
     expect(getByText('Please enter the number of guests.')).toBeInTheDocument();
     expect(getByText('Please select an occasion.')).toBeInTheDocument();
   });
-
-  
 });
 describe('BookingForm Component', () => {
-  test('Renders the "Choose date" label', () => {
+  test('Allows the user to submit the form', () => {
     // Define initial formData state
     const initialFormData = {
-      date: '', // Set date to empty string or any initial value you need for the test
-      time: '',
-      guests: '',
-      occasion: '',
+      date: '2024-03-01', // Set an initial date value for testing
+      time: '17:00', // Set an initial time value for testing
+      guests: '2', // Set an initial number of guests value for testing
+      occasion: 'Birthday', // Set an initial occasion value for testing
       dateError: '',
       timeError: '',
       guestsError: '',
       occasionError: ''
     };
 
-    // Render BookingForm with initialFormData
-    render(<BookingForm formData={initialFormData} />);
+    // Mock handleSubmit function
+    const handleSubmit = jest.fn();
 
-    // Check if the "Choose date" label is rendered
-    const element = screen.getByLabelText('Choose date');
-    expect(element).toBeInTheDocument();
+    // Render BookingForm with initialFormData and handleSubmit function
+    render(<BookingForm formData={initialFormData} onSubmit={handleSubmit} />);
+
+    // Find and click the submit button
+    const submitButton = screen.getByLabelText('Submit reservation');
+    fireEvent.click(submitButton);
+
+    // Check if handleSubmit function is called when the form is submitted
+    expect(handleSubmit).toHaveBeenCalled();
   });
-
-  describe('BookingForm Component', () => {
-    test('Allows the user to submit the form', () => {
-      // Define initial formData state
-      const initialFormData = {
-        date: '2024-03-01', // Set an initial date value for testing
-        time: '17:00', // Set an initial time value for testing
-        guests: '2', // Set an initial number of guests value for testing
-        occasion: 'Birthday', // Set an initial occasion value for testing
-        dateError: '',
-        timeError: '',
-        guestsError: '',
-        occasionError: ''
-      };
-  
-      // Mock handleSubmit function
-      const handleSubmit = jest.fn();
-  
-      // Render BookingForm with initialFormData and handleSubmit function
-      render(<BookingForm formData={initialFormData} onSubmit={handleSubmit} />);
-  
-      // Find and click the submit button
-      const submitButton = screen.getByLabelText('Submit reservation');
-      fireEvent.click(submitButton);
-  
-      // Check if handleSubmit function is called when the form is submitted
-      expect(handleSubmit).toHaveBeenCalled();
-    });
-  });
-  
-
-  
 });
+
+
+

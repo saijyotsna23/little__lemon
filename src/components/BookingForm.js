@@ -25,14 +25,14 @@ const BookingForm = ({ formData, availableTimes, onChange, onSubmit, onDateChang
                         id="res-time"
                         value={formData.time}
                         onChange={(e) => onChange("time", e.target.value)}
-                        className={formData.timeError ? "error-borderr" : ""}
+                        className={formData.timeError ? "error-border" : ""}
                         aria-label="Choose time"
                         aria-required="true"
                     >
                         <option value="" disabled hidden>Select time </option>
-                        {availableTimes && availableTimes.map((time, index) => (
-                            <option key={index}>{time}</option>
-                        ))}
+    {Array.isArray(availableTimes) && availableTimes.map((time, index) => (
+        <option key={index}>{time}</option>
+    ))}
                     </select>
                     {formData.timeError && <p className="error">{formData.timeError}</p>}
                 </div>

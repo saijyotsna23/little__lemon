@@ -1,35 +1,40 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import '../ConfirmationMessage.css';
-const ConfirmationMessage = ({ bookingDetails }) => {
+const ConfirmedBooking = () => {
+    const location=useLocation();
+    console.log(location);
     return (
-        <div className="confirmation-modal">
-            <h2>Booking Confirmation</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Thank you for your booking!</td>
-                    </tr>
-                    <tr>
+    <div className="container">
+        <h2>Booking Confirmation</h2>
+        <table>
+        <tbody>
+            <tr>
+            <td>Thank you for your booking!</td>
+           
+            </tr>
+            <tr><td>Your Booking Details</td></tr>
+            <tr>
                         <td>Date:</td>
-                        <td>{bookingDetails.date}</td>
+                        <td>{location.state.formData.date}</td>
                     </tr>
                     <tr>
                         <td>Time:</td>
-                        <td>{bookingDetails.time}</td>
+                        <td>{location.state.formData.time}</td>
                     </tr>
                     <tr>
                         <td>Guests:</td>
-                        <td>{bookingDetails.guests}</td>
+                        <td>{location.state.formData.guests}</td>
                     </tr>
                     <tr>
                         <td>Occasion:</td>
-                        <td>{bookingDetails.occasion}</td>
+                        <td>{location.state.formData.occasion}</td>
                     </tr>
-                </tbody>
-            </table>
-        
-        </div>
+            
+        </tbody>
+        </table>
+    </div>
     );
 };
 
-export default ConfirmationMessage;
+export default ConfirmedBooking;
